@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         はてなホットエントリー 自動非公開ブックマーク
 // @namespace    https://github.com/CiaNostal/hotentry-autobookmark
-// @version      1.0.0
+// @version      1.1.0
 // @description  b.hatena.ne.jp のホットエントリーのリンクを開いたら、自動で非公開ブックマーク登録する
 // @author       you
+// @match        https://b.hatena.ne.jp/
 // @match        https://b.hatena.ne.jp/hotentry*
 // @grant        GM_xmlhttpRequest
 // @grant        GM_getValue
