@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         はてなホットエントリー 自動非公開ブックマーク
 // @namespace    https://github.com/CiaNostal/hotentry-autobookmark
-// @version      1.1.0
+// @version      1.2.0
 // @description  b.hatena.ne.jp のホットエントリーのリンクを開いたら、自動で非公開ブックマーク登録する
 // @author       you
 // @match        https://b.hatena.ne.jp/
 // @match        https://b.hatena.ne.jp/hotentry*
+// @match        https://b.hatena.ne.jp/entry*
 // @grant        GM_xmlhttpRequest
 // @grant        GM_getValue
 // @grant        GM_setValue
@@ -19,7 +20,9 @@
   'use strict';
 
   const API_URL = 'https://bookmark.hatenaapis.com/rest/1/my/bookmark';
-  const LINK_SELECTOR = '.entrylist-contents-title a';
+  // ホットエントリー一覧ページのリンク、および個別のブックマークコメントページ(/entry/...)の
+  // 記事タイトルリンクの両方を対象にする
+  const LINK_SELECTOR = '.entrylist-contents-title a, .js-entry-info-title-text';
   const STORAGE_KEYS = {
     consumerKey: 'hatena_consumer_key',
     consumerSecret: 'hatena_consumer_secret',

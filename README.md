@@ -1,10 +1,10 @@
 # hotentry-autobookmark
 
-はてなブックマークのホットエントリー(`https://b.hatena.ne.jp/` およびその配下 `https://b.hatena.ne.jp/hotentry*`)に表示されているリンクを開いたときに、そのページを自動で**非公開ブックマーク**として登録するTampermonkeyユーザースクリプトです。コメント・タグは付与しません。
+はてなブックマークのホットエントリー(`https://b.hatena.ne.jp/` およびその配下 `https://b.hatena.ne.jp/hotentry*`)、および個別のブックマークコメントページ(`https://b.hatena.ne.jp/entry/...`、例: `https://b.hatena.ne.jp/entry/s/example.com/path/`)に表示されているリンクを開いたときに、そのページを自動で**非公開ブックマーク**として登録するTampermonkeyユーザースクリプトです。コメント・タグは付与しません。
 
 ## 仕組み
 
-- スクリプトはホットエントリーページ上のリンク要素(`.entrylist-contents-title a`)へのクリックを検知します。
+- スクリプトは対象ページ上のリンク要素(ホットエントリー一覧: `.entrylist-contents-title a` / ブックマークコメントページ: `.js-entry-info-title-text`)へのクリックを検知します。
 - クリックを検知すると、ページ遷移はブロックせず、裏で非同期にはてなブックマーク公式REST API(`https://bookmark.hatenaapis.com/rest/1/my/bookmark`)へPOSTリクエストを送り、ブックマークを登録します。
 - 認証はOAuth 1.0a(HMAC-SHA1署名)です。署名処理は外部ライブラリに依存せず、スクリプト内に自前実装しています(CDN障害等での動作不良を避けるため)。
 - OAuthの認証情報(Consumer key/secret, Access token/secret)は**リポジトリには一切含まれません**。各端末のTampermonkeyのローカルストレージ(`GM_setValue`)にのみ保存されます。
