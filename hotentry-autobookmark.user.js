@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         はてなホットエントリー 自動非公開ブックマーク
 // @namespace    https://github.com/CiaNostal/hotentry-autobookmark
-// @version      1.2.0
+// @version      1.3.0
 // @description  b.hatena.ne.jp のホットエントリーのリンクを開いたら、自動で非公開ブックマーク登録する
 // @author       you
 // @match        https://b.hatena.ne.jp/
@@ -210,12 +210,20 @@
 
   // ---------- クリック検知(遷移はブロックしない) ----------
 
+  function handlePointerEvent(event) {
+    const link = event.target.closest(LINK_SELECTOR);
+    if (!link || !link.href) return;
+    registerBookmark(link.href);
+  }
+
+  // 左クリック(通常のリンク遷移・Ctrl/Cmdクリックでの新規タブ)は "click" イベント
+  document.addEventListener('click', handlePointerEvent, true);
+  // ホイール(中)クリックでの新規タブは "click" ではなく "auxclick" イベントとして発火する
   document.addEventListener(
-    'click',
+    'auxclick',
     (event) => {
-      const link = event.target.closest(LINK_SELECTOR);
-      if (!link || !link.href) return;
-      registerBookmark(link.href);
+      if (event.button !== 1) return; // 1 = 中クリック(ホイールボタン)
+      handlePointerEvent(event);
     },
     true
   );
